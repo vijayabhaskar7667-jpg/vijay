@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #eef2f3;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #0077cc;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background-color: #0077cc;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #005fa3;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .profile {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile p {
+      margin: 10px 0;
+    }
+
+    .logout-btn {
+      margin-top: 20px;
+      background-color: #666;
+    }
+
+    .logout-btn:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="loginBox">
+    <h3>Student Login</h3>
+    <label for="username">Username</label>
+    <input type="text" id="username" />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" />
+
+    <button class="btn" onclick="login()">Login</button>
+    <div id="loginError" class="error">Invalid username or password.</div>
+  </div>
+
+  <div class="container profile" id="studentProfile">
+    <h3>Welcome, <span id="studentName"></span> 👋</h3>
+    <p><strong>Roll No:</strong> <span id="studentRoll"></span></p>
+    <p><strong>Email:</strong> <span id="studentEmail"></span></p>
+    <p><strong>Course:</strong> <span id="studentCourse"></span></p>
+    <button class="btn logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    // Pretend student database
+    const students = [
+      {
+        username: "vijay",
+        password: "vijay1",
+        name: "vijayabhaskar",
+        roll: "101",
+        email: "viajy@example.com",
+        course: "Computer Science"
+      },
+      {
+        username: "pranith",
+        password: "pra1",
+        name: "pranith",
+        roll: "102",
+        email: "pranith@example.com",
+        course: "Mechanical Engineering"
+      }
+    ];
+
+    function login() {
+      const uname = document.getElementById("username").value.trim();
+      const pword = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("loginError");
+
+      const student = students.find(s => s.username === uname && s.password === pword);
+
+      if (student) {
+        // Hide login, show profile
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("studentProfile").style.display = "block";
+
+        document.getElementById("studentName").innerText = student.name;
+        document.getElementById("studentRoll").innerText = student.roll;
+        document.getElementById("studentEmail").innerText = student.email;
+        document.getElementById("studentCourse").innerText = student.course;
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+
+    function logout() {
+      // Clear everything and go back to login
+      document.getElementById("loginBox").style.display = "block";
+      document.getElementById("studentProfile").style.display = "none";
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("loginError").style.display = "none";
+    }
+  </script>
+</body>
+</html>
